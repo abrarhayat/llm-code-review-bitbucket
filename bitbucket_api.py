@@ -1,10 +1,7 @@
 from collections import defaultdict
-import os
-import argparse
-from dotenv import load_dotenv
 from atlassian import Bitbucket
 
-def get_all_file_content(bitbucket: Bitbucket, project_key: str, 
+def get_all_file_content(bitbucket: Bitbucket, project_key: str,
                          repository_slug: str, file_types: list = None) -> dict:
     """
     Fetches the content of all files in a given Bitbucket repository.
@@ -29,27 +26,3 @@ def get_all_file_content(bitbucket: Bitbucket, project_key: str,
         all_repo_file_content[filename] = file_content
     return all_repo_file_content
 
-
-def main():
-    """
-    Main function to run the script.
-    """
-    load_dotenv()
-    parser = argparse.ArgumentParser(description="Process some file types.")
-    parser.add_argument("file_types", nargs="*", help="File types to process.")
-    args = parser.parse_args()
-    bitbucket = Bitbucket(
-        url=os.getenv("BITBUCKET_URL"),
-        token=os.getenv("BITBUCKET_API_TOKEN")
-    )
-    project_key = os.getenv("PROJECT_KEY")
-    file_types = args.file_types if args.file_types else None
-    all_repo_file_content = get_all_file_content(bitbucket, project_key, 
-                                                 os.getenv("REPOSITORY_SLUG"), file_types)
-    for filename, file_content in all_repo_file_content.items():
-        print("Content of file: " + filename)
-        print(file_content)
-        print("\n\n")
-
-if __name__ == "__main__":
-    main()
