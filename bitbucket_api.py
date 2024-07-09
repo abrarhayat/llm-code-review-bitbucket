@@ -27,7 +27,7 @@ def get_all_file_content(bitbucket: Bitbucket, project_key: str,
     return all_repo_file_content
 
 def get_files_from_pull_request(bitbucket: Bitbucket, project_key: str,
-                                repository_slug: str, pull_request_id: int,
+                                repository_slug: str, pull_request_id: str,
                                 file_types: list = None) -> dict:
     """
     Fetches the content of all files in a given pull request.
